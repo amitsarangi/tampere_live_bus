@@ -1,9 +1,33 @@
-Install NodeJS from here - https://nodejs.org/en/
+# Living Lab Bus Development Kit
 
-Extract the Zip file to your preferred location.
+![Image of Yaktocat](https://llb.sis.uta.fi/portal/img/llb_bg2.png)
 
-Open command prompt, navigate to the folder you have extracted the zip to,  type 'npm install live-server'
+The development kit is used to create applications tht can be deployed to the [Living Lab Bus Platform ](https://llb.sis.uta.fi/) through the [LLB Developer Portal](https://llb.sis.uta.fi/portal).
 
-Once done , type 'node live_app.js' and it should launch the Development Kit.
+- ### Guidelines
+
+[Developer Guidelines](https://utafi-my.sharepoint.com/personal/as422619_staff_uta_fi/_layouts/15/guestaccess.aspx?guestaccesstoken=uhicysJdGVHiGzscW1ut5HWCIOttb8HEC5ca9QLP4y0%3d&docid=0112373911c6d4e82a698ab3b4851a060&rev=1)
+
+[Design Guidelines](https://utafi-my.sharepoint.com/personal/as422619_staff_uta_fi/_layouts/15/guestaccess.aspx?guestaccesstoken=QGwx73%2fO6P%2fKjnI2rHFNyyzwwT2jVjowxfYp%2fEQ4YVo%3d&docid=0cbb622a9f21c47d7b683c28b4338e3a1&rev=1)
+
+- ### Installation
+
+  - Install [NodeJS](https://nodejs.org/en/)
+
+  - Clone the repo locally
+   ```
+    git clone https://github.com/llb-uta/development-kit.git
+    ```
+    Or [Download ZIP](https://github.com/llb-uta/development-kit/archive/master.zip) and extract to your directory of choice.
+  
+  - Open command prompt, navigate to the directory
+  - Install 'live-server' npm module
+   ```
+    npm install live-server
+    ```
+  - launch the development kit
+    ```
+    node live_app.js
+    ```
 
 Your application goes inside /app directory. Once finished , zip the directory and upload to the developer portal
