@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>LLB Development Kit</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#212121">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="shortcut icon" href="img/Bus_blue.png" type="image/x-icon">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.9/angular-material.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,700,400italic">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body ng-app="llbdevkit" layout="column" ng-controller="MainController as vm">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <md-button ng-disabled style="visibility: hidden" aria-label="None" class="md-icon-button">
+          <md-icon ng-md-icon icon="settings"></md-icon>
+        </md-button><span flex></span>
+        <h3>LLB Development Kit</h3><span flex></span>
+        <md-button ng-click="vm.showControls = !vm.showControls" class="md-icon-button">
+          <md-icon ng-md-icon icon="settings"></md-icon>
+          <md-tooltip>Toggle Control Panel</md-tooltip>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <div layout="column" flex="none" ng-if="vm.showControls" class="md-whiteframe-z2 md-padding">
+      <div layout="column" layout-gt-md="row">
+        <div flex="flex" flex-gt-md="50">
+          <div layout="row"><span flex hide show-gt-md></span>
+            <md-subheader flex="30" flex-gt-md="15">Device Details</md-subheader>
+            <md-input-container flex="40" flex-gt-md="25">
+              <label>Select Device to emulate</label>
+              <md-select ng-model="vm.deviceIndex" aria-label="Device Type" ng-init="vm.deviceIndex = 0">
+                <md-option ng-value="$index" ng-repeat="device in vm.devices">{{device.name + " : ( " + (vm.rotated ? vm.devices[vm.deviceIndex].height : vm.devices[vm.deviceIndex].width) + ' x '+ (vm.rotated ? vm.devices[vm.deviceIndex].width : vm.devices[vm.deviceIndex].height)+' )' }}</md-option>
+              </md-select>
+            </md-input-container>
+            <md-button ng-click="vm.rotated = !vm.rotated" ng-class="{&quot;md-primary&quot; : vm.rotated}">
+              <md-icon ng-md-icon icon="screen_rotation"></md-icon>
+              <md-tooltip>Rotate Screen</md-tooltip>
+            </md-button>
+          </div>
+          <div layout="row"><span flex hide show-gt-md></span>
+            <md-subheader flex="30" flex-gt-md="15">App Details</md-subheader>
+            <md-input-container flex="40" flex-gt-md="25">
+              <label>Select Tile Size</label>
+              <md-select ng-model="vm.tile_height" ng-init="vm.tile_height = 100" ng-disabled="vm.fullscreen">
+                <md-option value="100">Small</md-option>
+                <md-option value="200">Medium</md-option>
+                <md-option value="300">Large</md-option>
+                <md-tooltip ng-if="vm.fullscreen">Fullscreen mode does not have tiles</md-tooltip>
+              </md-select>
+            </md-input-container>
+            <md-button ng-click="vm.fullscreen = !vm.fullscreen" ng-class="{&quot;md-primary&quot; : vm.fullscreen}">
+              <md-icon ng-md-icon icon="{{vm.fullscreen ? &quot;fullscreen&quot;:&quot;fullscreen_exit&quot;}}"></md-icon>
+              <md-tooltip>Toggle Fullscreen</md-tooltip>
+            </md-button>
+          </div>
+        </div>
+        <div flex="flex" flex-gt-md="50" layout="column" class="send-events">
+          <md-subheader flex="50">Send Custom Events</md-subheader>
+          <div layout="row" flex="50">
+            <md-input-container flex="none">
+              <label>Event Type</label>
+              <md-select ng-model="vm.event_type" ng-change="vm.setEventData()">
+                <md-option value="location">Location</md-option>
+                <md-option value="bus">Bus</md-option>
+              </md-select>
+            </md-input-container>
+            <md-input-container>
+              <label>Data/JSON Data</label>
+              <input ng-model="vm.event_data">
+            </md-input-container>
+            <md-input-container>
+              <md-button ng-click="vm.sendEvent(&quot;app&quot;, vm.event_type,vm.event_data )" class="md-primary send-button">Send</md-button>
+            </md-input-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div layout="row" layout-align="center" class="bottom">
+      <div ng-style="{&quot;width&quot;: (vm.rotated ? vm.devices[vm.deviceIndex].height : vm.devices[vm.deviceIndex].width) +&quot;px&quot; , &quot;height&quot;: (vm.rotated ? vm.devices[vm.deviceIndex].width : vm.devices[vm.deviceIndex].height) + &quot;px&quot; }" layout="column" class="phone-frame md-whiteframe-z2">
+        <md-toolbar class="md-whiteframe-z2">
+          <div class="md-toolbar-tools">
+            <md-button ng-click="vm.fullscreen = false" aria-label="Menu" class="md-icon-button">
+              <md-icon ng-md-icon icon="{{vm.fullscreen ? &quot;arrow_back&quot;: &quot;more_vert&quot;}}" options="{&quot;duration&quot;: 300}"></md-icon>
+              <md-tooltip ng-if="!vm.fullscreen">Menu Button (Disabled)</md-tooltip>
+            </md-button><span flex></span>
+            <h3>Living Lab Bus</h3><span flex></span>
+            <md-button class="md-icon-button">
+              <md-icon ng-md-icon icon="feedback"></md-icon>
+              <md-tooltip>Feedback Button (Disabled)</md-tooltip>
+            </md-button>
+          </div>
+        </md-toolbar>
+        <div flex>
+          <div ng-style="{&quot;height&quot;: vm.fullscreen? &quot;100%&quot;:vm.tile_height+&quot;px&quot;}" class="frame-container">
+            <iframe id="app" src="app" width="100%" height="100%" style="position:absolute" class="md-whiteframe-z2 app-frame"></iframe>
+            <div ng-click="vm.fullscreen = true" ng-hide="vm.fullscreen" class="frame-event-hijacker"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-animate.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-aria.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-messages.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.9/angular-material.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.0/angular-material-icons.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/SVG-Morpheus/0.1.8/svg-morpheus.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

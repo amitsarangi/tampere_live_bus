@@ -1,0 +1,93 @@
+doctype
+html(lang='en')
+  head
+    title LLB Development Kit
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content="initial-scale=1, maximum-scale=1, user-scalable=no" )
+    meta(name="theme-color", content="#212121")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
+    
+    link(rel='shortcut icon', href='img/Bus_blue.png', type='image/x-icon') 
+    link(rel="stylesheet", href="//cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.9/angular-material.css")
+    link(rel="stylesheet", href="//fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,700,400italic")
+    link(rel="stylesheet", href="css/style.css")
+  body(ng-app='llbdevkit', layout='column', ng-controller='MainController as vm')
+    md-toolbar
+        .md-toolbar-tools
+            md-button.md-icon-button(ng-disabled, style='visibility: hidden' aria-label='None')
+                md-icon(ng-md-icon, icon="settings")
+            span(flex)
+            h3 LLB Development Kit
+            span(flex)
+            md-button.md-icon-button(ng-click='vm.showControls = !vm.showControls')
+                md-icon(ng-md-icon, icon="settings")
+                md-tooltip Toggle Control Panel
+    div(layout='column' flex='none' ng-if='vm.showControls').md-whiteframe-z2.md-padding
+        div(layout='column' layout-gt-md='row')
+            div(flex='flex', flex-gt-md='50')
+                div(layout='row')
+                    span(flex hide show-gt-md)
+                    md-subheader(flex='30' flex-gt-md='15') Device Details
+                    md-input-container(flex='40' flex-gt-md='25')
+                        label Select Device to emulate
+                        md-select(ng-model = 'vm.deviceIndex' aria-label='Device Type' ng-init="vm.deviceIndex = 0")
+                            md-option(ng-value='$index' ng-repeat='device in vm.devices') {{device.name + " : ( " + (vm.rotated ? vm.devices[vm.deviceIndex].height : vm.devices[vm.deviceIndex].width) + ' x '+ (vm.rotated ? vm.devices[vm.deviceIndex].width : vm.devices[vm.deviceIndex].height)+' )' }}
+                    md-button(ng-click='vm.rotated = !vm.rotated' ng-class='{"md-primary" : vm.rotated}')
+                        md-icon(ng-md-icon icon='screen_rotation')
+                        md-tooltip Rotate Screen
+                div(layout='row')
+                    span(flex hide show-gt-md)
+                    md-subheader(flex='30' flex-gt-md='15') App Details
+                    md-input-container(flex='40' flex-gt-md='25')
+                        label Select Tile Size
+                        md-select(ng-model='vm.tile_height' ng-init="vm.tile_height = 100" ng-disabled="vm.fullscreen")
+                            md-option(value='100') Small
+                            md-option(value='200') Medium
+                            md-option(value='300') Large
+                            md-tooltip(ng-if='vm.fullscreen') Fullscreen mode does not have tiles
+                    md-button(ng-click='vm.fullscreen = !vm.fullscreen' ng-class='{"md-primary" : vm.fullscreen}' )
+                        md-icon(ng-md-icon icon='{{vm.fullscreen ? "fullscreen":"fullscreen_exit"}}')
+                        md-tooltip Toggle Fullscreen
+            div(flex='flex', flex-gt-md='50' layout='column').send-events
+                md-subheader(flex='50') Send Custom Events
+                div(layout='row' flex='50')
+                    md-input-container(flex='none')
+                        label Event Type
+                        md-select(ng-model='vm.event_type' ng-change="vm.setEventData()")
+                            md-option(value='location') Location
+                            md-option(value='bus') Bus
+                    md-input-container
+                        label Data/JSON Data
+                        input(ng-model='vm.event_data')
+                    md-input-container
+                        md-button.md-primary.send-button(ng-click='vm.sendEvent("app", vm.event_type,vm.event_data )') Send
+
+
+    div.bottom(layout='row', layout-align='center')
+        div.phone-frame.md-whiteframe-z2(ng-style='{"width": (vm.rotated ? vm.devices[vm.deviceIndex].height : vm.devices[vm.deviceIndex].width) +"px" , "height": (vm.rotated ? vm.devices[vm.deviceIndex].width : vm.devices[vm.deviceIndex].height) + "px" }' layout='column')
+            md-toolbar.md-whiteframe-z2
+                .md-toolbar-tools
+                    md-button.md-icon-button(ng-click="vm.fullscreen = false" aria-label="Menu")
+                        md-icon(ng-md-icon, icon='{{vm.fullscreen ? "arrow_back": "more_vert"}}' options='{"duration": 300}')
+                        md-tooltip(ng-if='!vm.fullscreen') Menu Button (Disabled)
+                    span(flex)
+                    h3 Living Lab Bus
+                    span(flex)
+                    md-button.md-icon-button
+                        md-icon(ng-md-icon, icon='feedback')
+                        md-tooltip Feedback Button (Disabled)
+            div(flex)
+                div.frame-container(ng-style='{"height": vm.fullscreen? "100%":vm.tile_height+"px"}' )
+                    iframe.md-whiteframe-z2.app-frame(id="app" src="app" width="100%" height="100%" style='position:absolute')
+                    div.frame-event-hijacker(ng-click="vm.fullscreen = true" ng-hide='vm.fullscreen')
+
+
+    script(src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.js")
+    script(src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-animate.min.js")
+    script(src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-aria.min.js")
+    script(src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-messages.min.js")
+    script(src="//cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.9/angular-material.min.js")
+    script(src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.0/angular-material-icons.min.js")
+    script(src="//cdnjs.cloudflare.com/ajax/libs/SVG-Morpheus/0.1.8/svg-morpheus.js")
+    script(src="js/app.js")
