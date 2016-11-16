@@ -1,3 +1,13 @@
+.md-toolbar-tools {
+  height: 48px !important;
+  min-height: 48px !important;
+}
+
+md-toolbar {
+  min-height: 48px !important;
+  height: 48px !important;
+}
+
 .md-toolbar-tools h3 {
   font-weight: 100;
 }

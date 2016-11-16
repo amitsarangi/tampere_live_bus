@@ -1,7 +1,7 @@
 var devkit = angular.module('llbdevkit',['ngMaterial','ngMdIcons'])
 
 
-devkit.controller('MainController',['$scope', '$window', function($scope, $window){
+devkit.controller('MainController',['$scope', '$window','$timeout', function($scope, $window, $timeout){
 	var vm = this
 
 	vm.devices = [
@@ -15,8 +15,39 @@ devkit.controller('MainController',['$scope', '$window', function($scope, $windo
 	{'name': "Nexus 6P" , 'width': 435, 'height':773}
 	]
 
-	vm.rotated = false;
-	vm.showControls = true;
+	$timeout(function(){
+		vm.rotated = JSON.parse($window.localStorage.getItem('rotated', 'false'));
+		vm.showControls = JSON.parse($window.localStorage.getItem('showControls', 'true'));
+		vm.deviceIndex = parseInt($window.localStorage.getItem('deviceIndex', '0'));
+		vm.tile_height = parseInt($window.localStorage.getItem('tileHeight', '100'));
+		vm.fullscreen = JSON.parse($window.localStorage.getItem('fullscreen', 'false'));
+	})
+
+
+	$scope.$watch('vm.fullscreen', function(oldValue, newValue){
+		$timeout(function(){
+			vm.sendEvent('app', 'window_state', JSON.stringify({fullscreen: vm.fullscreen}))
+
+			if(oldValue == undefined || newValue == undefined || oldValue == newValue) return
+			
+			$window.localStorage.setItem('fullscreen', vm.fullscreen)
+
+		}, 300)
+	})
+
+
+	watchList = 'vm.rotated+vm.deviceIndex+vm.showControls+vm.tile_height'
+
+	$scope.$watch(watchList, function(oldValue, newValue){
+		if(oldValue == undefined || newValue == undefined || oldValue == newValue) return
+
+		$timeout(function(){
+			$window.localStorage.setItem('rotated', vm.rotated)
+			$window.localStorage.setItem('deviceIndex', vm.deviceIndex)
+			$window.localStorage.setItem('showControls', vm.showControls)
+			$window.localStorage.setItem('tileHeight', vm.tile_height)
+		})
+	})
 
 
 	vm.sendEvent = function(app_id, event_type, event_data)
@@ -33,7 +64,14 @@ devkit.controller('MainController',['$scope', '$window', function($scope, $windo
 		switch(vm.event_type)
 		{
 			case 'location':
-				vm.event_data = JSON.stringify({latitude: 0.00000, longitude: 0.00000})
+				data_to_send = {}
+	  			data_to_send['status'] = 'success'
+	  			data_to_send['data'] = {}
+	  			data_to_send['data']['timestamp'] = Math.floor(Date.now() / 1000)
+	  			data_to_send['data']['latitude'] = 0
+	  			data_to_send['data']['longitude'] = 0
+	  			data_to_send['data']['accuracy'] = 10
+				vm.event_data = JSON.stringify(data_to_send)
 				break;
 			case 'bus':
 				vm.event_data = JSON.stringify({bus_no: 13, bus_id: 1121, event_type: 'bus_detected'})
@@ -41,11 +79,22 @@ devkit.controller('MainController',['$scope', '$window', function($scope, $windo
 		}
 	}
 
-	$scope.$watch('vm.fullscreen', function(){
-		vm.sendEvent('app', 'window_state', JSON.stringify({fullscreen: vm.fullscreen}))
-	})
+	listeners = {}
 
-	vm.fullscreen = false;
+
+	var dimension_event = function () {
+	  		dimension = {}
+
+	  		dimension['fullscreen_width'] = document.getElementById('contentWindow').offsetWidth
+	  		dimension['fullscreen_height'] = document.getElementById('contentWindow').offsetHeight
+	  		
+	  		dimension['tile_width'] = document.getElementById('contentWindow').offsetWidth
+	  		dimension['tile_height'] = vm.tile_height
+
+	  		$rootScope.sendEvent('app', 'window_dimensions', JSON.stringify(dimension))
+	}
+	angular.element($window).bind('resize', dimension_event);
+
 
 	var eventMethod = $window.addEventListener ? "addEventListener" : "attachEvent";
 	var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
@@ -57,10 +106,10 @@ devkit.controller('MainController',['$scope', '$window', function($scope, $windo
 	  	{
 	  		dimension = {}
 
-	  		dimension['fullscreen_width'] = vm.devices[vm.deviceIndex].width
-	  		dimension['fullscreen_height'] = vm.devices[vm.deviceIndex].height
+	  		dimension['fullscreen_width'] = document.getElementById('contentWindow').offsetWidth
+	  		dimension['fullscreen_height'] = document.getElementById('contentWindow').offsetHeight
 	  		
-	  		dimension['tile_width'] = vm.devices[vm.deviceIndex].width
+	  		dimension['tile_width'] = document.getElementById('contentWindow').offsetWidth
 	  		dimension['tile_height'] = vm.tile_height
 
 	  		vm.sendEvent('app', 'window_dimensions', JSON.stringify(dimension))

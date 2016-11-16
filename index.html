@@ -25,15 +25,15 @@
         </md-button>
       </div>
     </md-toolbar>
-    <div layout="column" flex="none" ng-if="vm.showControls" class="md-whiteframe-z2 md-padding">
+    <div layout="column" flex="none" ng-show="vm.showControls" class="md-whiteframe-z2 md-padding">
       <div layout="column" layout-gt-md="row">
         <div flex="flex" flex-gt-md="50">
           <div layout="row"><span flex hide show-gt-md></span>
             <md-subheader flex="30" flex-gt-md="15">Device Details</md-subheader>
             <md-input-container flex="40" flex-gt-md="25">
               <label>Select Device to emulate</label>
-              <md-select ng-model="vm.deviceIndex" aria-label="Device Type" ng-init="vm.deviceIndex = 0">
-                <md-option ng-value="$index" ng-repeat="device in vm.devices">{{device.name + " : ( " + (vm.rotated ? vm.devices[vm.deviceIndex].height : vm.devices[vm.deviceIndex].width) + ' x '+ (vm.rotated ? vm.devices[vm.deviceIndex].width : vm.devices[vm.deviceIndex].height)+' )' }}</md-option>
+              <md-select ng-model="vm.deviceIndex" aria-label="Device Type">
+                <md-option ng-value="$index" ng-repeat="device in vm.devices">{{device.name + " : ( " + (vm.rotated ? vm.devices[$index].height : vm.devices[$index].width) + ' x '+ (vm.rotated ? vm.devices[$index].width : vm.devices[$index].height)+' )' }}</md-option>
               </md-select>
             </md-input-container>
             <md-button ng-click="vm.rotated = !vm.rotated" ng-class="{&quot;md-primary&quot; : vm.rotated}">
@@ -45,7 +45,7 @@
             <md-subheader flex="30" flex-gt-md="15">App Details</md-subheader>
             <md-input-container flex="40" flex-gt-md="25">
               <label>Select Tile Size</label>
-              <md-select ng-model="vm.tile_height" ng-init="vm.tile_height = 100" ng-disabled="vm.fullscreen">
+              <md-select ng-model="vm.tile_height" ng-disabled="vm.fullscreen">
                 <md-option value="100">Small</md-option>
                 <md-option value="200">Medium</md-option>
                 <md-option value="300">Large</md-option>
@@ -94,7 +94,7 @@
             </md-button>
           </div>
         </md-toolbar>
-        <div flex>
+        <div id="contentWindow" flex>
           <div ng-style="{&quot;height&quot;: vm.fullscreen? &quot;100%&quot;:vm.tile_height+&quot;px&quot;}" class="frame-container">
             <iframe id="app" src="app" width="100%" height="100%" style="position:absolute" class="md-whiteframe-z2 app-frame"></iframe>
             <div ng-click="vm.fullscreen = true" ng-hide="vm.fullscreen" class="frame-event-hijacker"></div>

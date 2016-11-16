@@ -6,7 +6,7 @@ The development kit is used to create applications tht can be deployed to the [L
 
 - ### Guidelines
 
-    -[Developer Guidelines](https://utafi-my.sharepoint.com/personal/as422619_staff_uta_fi/_layouts/15/guestaccess.aspx?guestaccesstoken=uhicysJdGVHiGzscW1ut5HWCIOttb8HEC5ca9QLP4y0%3d&docid=0112373911c6d4e82a698ab3b4851a060&rev=1)
+    -[Developer Guidelines](https://utafi-my.sharepoint.com/personal/as422619_staff_uta_fi/_layouts/15/guestaccess.aspx?guestaccesstoken=ObsxF57XkyWxfc0ICkf5uWO8gPF9SKun8%2bGeRmCMsxM%3d&docid=039f6b241e8b44a5f94447507502a8af0&rev=1)
 
     -[Design Guidelines](https://utafi-my.sharepoint.com/personal/as422619_staff_uta_fi/_layouts/15/guestaccess.aspx?guestaccesstoken=QGwx73%2fO6P%2fKjnI2rHFNyyzwwT2jVjowxfYp%2fEQ4YVo%3d&docid=0cbb622a9f21c47d7b683c28b4338e3a1&rev=1)
 
