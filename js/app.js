@@ -91,7 +91,7 @@ devkit.controller('MainController',['$scope', '$window','$timeout', function($sc
 	  		dimension['tile_width'] = document.getElementById('contentWindow').offsetWidth
 	  		dimension['tile_height'] = vm.tile_height
 
-	  		$rootScope.sendEvent('app', 'window_dimensions', JSON.stringify(dimension))
+	  		vm.sendEvent('app', 'window_dimensions', JSON.stringify(dimension))
 	}
 	angular.element($window).bind('resize', dimension_event);
 
