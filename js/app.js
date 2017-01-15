@@ -16,11 +16,11 @@ devkit.controller('MainController',['$scope', '$window','$timeout', function($sc
 	]
 
 	$timeout(function(){
-		vm.rotated = JSON.parse($window.localStorage.getItem('rotated', 'false'));
-		vm.showControls = JSON.parse($window.localStorage.getItem('showControls', 'true'));
-		vm.deviceIndex = parseInt($window.localStorage.getItem('deviceIndex', '0'));
-		vm.tile_height = parseInt($window.localStorage.getItem('tileHeight', '100'));
-		vm.fullscreen = JSON.parse($window.localStorage.getItem('fullscreen', 'false'));
+		vm.rotated = JSON.parse($window.localStorage.getItem('rotated') || 'false');
+		vm.showControls = JSON.parse($window.localStorage.getItem('showControls') || 'true');
+		vm.deviceIndex = parseInt($window.localStorage.getItem('deviceIndex') || '0');
+		vm.tile_height = parseInt($window.localStorage.getItem('tileHeight') || '100');
+		vm.fullscreen = JSON.parse($window.localStorage.getItem('fullscreen') || 'false');
 	})
 
 
