@@ -1,6 +1,6 @@
 # Living Lab Bus Development Kit
 
-![Image of Yaktocat](https://llb.sis.uta.fi/portal/img/llb_bg2.png)
+![LLB Banner](https://llb.sis.uta.fi/portal/img/llb_bg2.png)
 
 The development kit is used to create applications tht can be deployed to the [Living Lab Bus Platform ](https://llb.sis.uta.fi/) through the [LLB Developer Portal](https://llb.sis.uta.fi/portal).
 
