@@ -27,7 +27,7 @@ The development kit is used to create applications tht can be deployed to the [L
     ```
   - Launch the development kit
     ```
-    node run
+    npm run
     ```
 
 - ### Note
