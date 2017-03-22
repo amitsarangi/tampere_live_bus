@@ -1,0 +1,26 @@
+{
+  "name": "llb_development_kit",
+  "version": "1.0.0",
+  "description": "The development kit to deploy application to Living Lab Bus platform",
+  "main": "live_app.js",
+  "dependencies": {
+    "live-server": "^1.2.0"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.0"
+  },
+  "scripts": {
+    "start": "live-server --port=8181 --watch=app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/llb-uta/development-kit.git"
+  },
+  "author": "University of Tampere",
+  "license": "LGPLv3",
+  "bugs": {
+    "url": "https://github.com/llb-uta/development-kit/issues"
+  },
+  "homepage": "https://github.com/llb-uta/development-kit#readme"
+}

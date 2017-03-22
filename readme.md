@@ -1,6 +1,6 @@
 # Living Lab Bus Development Kit
 
-![Image of Yaktocat](https://llb.sis.uta.fi/portal/img/llb_bg2.png)
+![LLB Logo](https://llb.sis.uta.fi/portal/img/llb_bg2.png)
 
 The development kit is used to create applications tht can be deployed to the [Living Lab Bus Platform ](https://llb.sis.uta.fi/) through the [LLB Developer Portal](https://llb.sis.uta.fi/portal).
 
@@ -21,13 +21,13 @@ The development kit is used to create applications tht can be deployed to the [L
   - Or [Download ZIP](https://github.com/llb-uta/development-kit/archive/master.zip) and extract to your directory of choice.
   
   - Open command prompt, navigate to the directory
-  - Install 'live-server' npm module
+  - Install dependency modules
    ```
-    npm install live-server
+    npm install
     ```
   - Launch the development kit
     ```
-    node live_app.js
+    node run
     ```
 
 - ### Note
