@@ -1,31 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>My Demo Application</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<div class="tile">
+		<span class="title">LIVE BUS TAMPERE</span>
+	</div>
+	<div class="fullscreen" id="map-canvas"></div>
+
+	<script type="text/javascript"src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-KT16jfNnsITN8fPTW4UeomZCppBjqAk"></script>
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<script type="text/javascript" src="js/llb.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
-</head>
-<body style='background-color: #26C6DA'>
-	<div id="test_window_state"></div>
-	<div id="test_location"></div>
-
-	<script type="text/javascript">
-
-		llb_app.addListener('window_state', function(data){
-			if(data.fullscreen)
-			{
-				document.getElementById("test_window_state").innerHTML = 'This is fullscreen'
-			}
-			else
-			{
-				document.getElementById("test_window_state").innerHTML = 'This is just a tile'
-			}
-		})
-
-		llb_app.addListener('location', function(data){
-			document.getElementById("test_location").innerHTML = "Location data : " + JSON.stringify(data)
-		})
-	</script>
 </body>
 </html>

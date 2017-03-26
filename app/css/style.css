@@ -1,0 +1,32 @@
+
+html,body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+}
+
+.tile, .fullscreen {
+    display:none;
+}
+
+.tile {
+    color: white;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto, sans-serif;
+    font-size: 20px;
+    font-weight: 200;
+    letter-spacing: .005em;
+}
+
+.active {
+    background:  darkslateblue;
+    flex: 1 1 auto;
+    display: flex;
+}
