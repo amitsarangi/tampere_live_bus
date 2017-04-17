@@ -46,8 +46,7 @@ document.addEventListener('DOMContentLoaded', function(){
     var fetchDataAndRender = function() {
         if(!isFullScren) return;
 
-        fetch(fetchUrl)
-        .then(res => res.json())
+        llb_app.fetch(fetchUrl)
         .then(data => data.Siri.ServiceDelivery.VehicleMonitoringDelivery["0"].VehicleActivity)
         .then((data) => {
 
